@@ -1,59 +1,54 @@
+# Wallet & Investment Flow (React Native Take-Home)
 
-# Wallet & Investment Flow
+This project implements a simple mobile investment flow using **React Native**, **Expo**, and **TypeScript**.
 
-This is a simple mobile investment flow application built with React Native and Expo. The application consists of three screens: Home, Wallet, and Opportunity Details.
+## Project Overview
 
-## Getting Started
+The app consists of three main screens:
+1.  **Home**: Displays balance summary and a list of investment opportunities.
+2.  **Wallet**: Displays balance summary and a list of historical transactions.
+3.  **Opportunity Details**: Allows the user to view details and invest in a fund.
 
-To run the application, you need to have Node.js and Expo CLI installed. Then, follow these steps:
+## How to Run
 
-1. Install the dependencies:
+1.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+2.  **Start the app**:
+    ```bash
+    npx expo start
+    ```
+3.  **Run**: Press `a` for Android, `i` for iOS (simulator required), or scanning the QR code with Expo Go.
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the development server:
+## Technical Decisions
 
-   ```bash
-   npx expo start
-   ```
+### 1. State Management
+I chose to use **React Context API** (`AppProvider` & `useAppState`) for this application.
+*   **Reasoning**: For a strictly defined scope of 3 screens and shared data (Balance, Opportunities, Transactions), Redux or Zustand would be overkill. React Context provides a lightweight dependency-injection mechanism perfect for sharing the "global" wallet state without prop drilling.
+*   **Implementation**: The `context/state.tsx` file encapsulates all data fetching, state updates, and business logic (like the `invest` function), keeping the UI components clean and focused on rendering.
 
-This will open a new browser tab with the Expo Developer Tools. You can then run the application on a physical device using the Expo Go app or on a simulator.
+### 2. Money Handling
+Money values are stored as **numbers** (floats) for calculation ease in this demo, but formatted strictly using `Intl.NumberFormat`.
+*   **Formatting**: The helper `utils/format.ts` ensures all values are displayed as `SAR` currency (e.g., `1,000.00 SAR`).
+*   **Precision**: In a real production environment, I would handle money values as **integers (cents/halalas)** or use a dedicated library like `currency.js` or `dinero.js` to avoid JavaScript floating-point errors (e.g., `0.1 + 0.2 !== 0.3`).
 
-## Project Structure
+### 3. Business Logic & Validation
+The logic for investing is centralized in the `invest` function within the Context:
+*   It checks client-side if `available balance >= amount`.
+*   Optimistically updates the UI state (deducts available, adds invested, appends transaction).
+*   Handles errors gracefully if the mock API fails.
 
-The project is structured as follows:
+---
 
-- `api/`: Contains the mock API for fetching data.
-- `app/`: Contains the screen components and navigation setup.
-- `assets/`: Contains the static assets like images and fonts.
-- `components/`: Contains the reusable components used across the application.
-- `constants/`: Contains the constants like colors and styles.
-- `context/`: Contains the React Context for state management.
-- `hooks/`: Contains the custom hooks.
-- `types/`: Contains the TypeScript type definitions.
-- `utils/`: Contains the utility functions.
+## Future Improvements
 
-## State Management
+If I had more time, I would improve the following:
 
-State is managed using a combination of React Context and the `useState` and `useEffect` hooks. The `AppContext` provides a centralized store for the application's data, including the user's balance, investment opportunities, and transactions.
-
-The `useAppState` hook provides a convenient way to access the application's state from any component. The `AppProvider` component is responsible for fetching the initial data and providing the state to the rest of the application.
-
-## Data Handling
-
-All data is mocked and served from the `api/mock.ts` file. The `getBalance`, `getOpportunities`, and `getTransactions` functions simulate network requests with a delay. The `invest` function simulates an investment by updating the balance and creating a new transaction.
-
-Monetary values are handled as numbers and formatted as currency using the `formatCurrency` utility function. Dates are handled as strings and formatted using the `formatDate` utility function.
-
-## Potential Improvements
-
-With more time, I would make the following improvements:
-
-- **Error Handling:** Improve the error handling to provide more specific error messages to the user.
-- **Testing:** Add unit and integration tests to ensure the application is working correctly.
-- **UI/UX:** Improve the UI/UX to make the application more user-friendly.
-- **Real API:** Replace the mock API with a real API to fetch data from a server.
-- **Authentication:** Add user authentication to protect the user's data.
-- **Offline Support:** Add offline support to allow the user to use the application without an internet connection.
+1.  **Robust Money Math**: as mentioned, switching to integer-based math or a Decimal library to prevent potential floating-point precision issues.
+2.  **Persisted State**: Integrating `AsyncStorage` or `Mmkv` to persist the user's balance and transactions across app restarts.
+3.  **Better Testing**: Adding unit tests (Jest) for the `invest` logic and snapshot tests for the UI components.
+4.  **Accessibility**: Improving accessibility labels and hints for screen readers.
+5.  **Styling**: Implementing a more sophisticated theming system (maybe utilizing `react-native-paper` or `tamagui`) instead of raw StyleSheet objects.
