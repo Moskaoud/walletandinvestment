@@ -52,3 +52,4 @@ If I had more time, I would improve the following:
 3.  **Better Testing**: Adding unit tests (Jest) for the `invest` logic and snapshot tests for the UI components.
 4.  **Accessibility**: Improving accessibility labels and hints for screen readers.
 5.  **Styling**: Implementing a more sophisticated theming system (maybe utilizing `react-native-paper` or `tamagui`) instead of raw StyleSheet objects.
+6.  **Deposit Feature**: Adding a functionality to allow users to deposit funds into their wallet.
