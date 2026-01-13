@@ -73,7 +73,7 @@ export const invest = async (amount: number): Promise<Transaction> => {
   MOCK_BALANCE.available -= amount;
   MOCK_BALANCE.invested += amount;
   const newTransaction: Transaction = {
-    id: String(Date.now()),
+    id: String(Date.now() + Math.random().toString(36).substr(2, 9)),
     type: 'INVEST',
     amount,
     date: new Date().toISOString(),

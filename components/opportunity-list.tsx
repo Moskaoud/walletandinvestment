@@ -1,7 +1,7 @@
 
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
+import React from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useAppState } from '../context/state';
 import { InvestmentOpportunity } from '../types';
 import { formatCurrency } from '../utils/format';
@@ -30,7 +30,7 @@ const OpportunityList: React.FC = () => {
     <FlatList
       data={opportunities}
       renderItem={({ item }) => <OpportunityListItem item={item} />}
-      keyExtractor={item => item.id}
+      keyExtractor={(item, index) => item.id ? `${item.id}-${index}` : index.toString()}
       contentContainerStyle={styles.list}
     />
   );

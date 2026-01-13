@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useAppState } from '../context/state';
 import { Transaction } from '../types';
 import { formatCurrency, formatDate } from '../utils/format';
@@ -16,6 +16,7 @@ const TransactionListItem: React.FC<{ item: Transaction }> = ({ item }) => (
 const TransactionList: React.FC = () => {
   const { transactions, loading } = useAppState();
 
+
   if (loading) {
     return <Text>Loading transactions...</Text>;
   }
@@ -28,7 +29,7 @@ const TransactionList: React.FC = () => {
     <FlatList
       data={transactions}
       renderItem={({ item }) => <TransactionListItem item={item} />}
-      keyExtractor={item => item.id}
+      keyExtractor={(item, index) => item.id ? `${item.id}-${index}` : index.toString()}
       contentContainerStyle={styles.list}
     />
   );
