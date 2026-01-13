@@ -1,53 +1,59 @@
-> Edited for use in IDX on 07/09/12
 
-# Welcome to your Expo app 👋
+# Wallet & Investment Flow
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a simple mobile investment flow application built with React Native and Expo. The application consists of three screens: Home, Wallet, and Opportunity Details.
 
-## Get started
+## Getting Started
 
-#### Android
+To run the application, you need to have Node.js and Expo CLI installed. Then, follow these steps:
 
-Android previews are defined as a `workspace.onStart` hook and started as a vscode task when the workspace is opened/started.
+1. Install the dependencies:
 
-Note, if you can't find the task, either:
-- Rebuild the environment (using command palette: `IDX: Rebuild Environment`), or
-- Run `npm run android -- --tunnel` command manually run android and see the output in your terminal. The device should pick up this new command and switch to start displaying the output from it.
+   ```bash
+   npm install
+   ```
 
-In the output of this command/task, you'll find options to open the app in a
+2. Start the development server:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   ```bash
+   npx expo start
+   ```
 
-You'll also find options to open the app's developer menu, reload the app, and more.
+This will open a new browser tab with the Expo Developer Tools. You can then run the application on a physical device using the Expo Go app or on a simulator.
 
-#### Web
+## Project Structure
 
-Web previews will be started and managred automatically. Use the toolbar to manually refresh.
+The project is structured as follows:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- `api/`: Contains the mock API for fetching data.
+- `app/`: Contains the screen components and navigation setup.
+- `assets/`: Contains the static assets like images and fonts.
+- `components/`: Contains the reusable components used across the application.
+- `constants/`: Contains the constants like colors and styles.
+- `context/`: Contains the React Context for state management.
+- `hooks/`: Contains the custom hooks.
+- `types/`: Contains the TypeScript type definitions.
+- `utils/`: Contains the utility functions.
 
-## Get a fresh project
+## State Management
 
-When you're ready, run:
+State is managed using a combination of React Context and the `useState` and `useEffect` hooks. The `AppContext` provides a centralized store for the application's data, including the user's balance, investment opportunities, and transactions.
 
-```bash
-npm run reset-project
-```
+The `useAppState` hook provides a convenient way to access the application's state from any component. The `AppProvider` component is responsible for fetching the initial data and providing the state to the rest of the application.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Data Handling
 
-## Learn more
+All data is mocked and served from the `api/mock.ts` file. The `getBalance`, `getOpportunities`, and `getTransactions` functions simulate network requests with a delay. The `invest` function simulates an investment by updating the balance and creating a new transaction.
 
-To learn more about developing your project with Expo, look at the following resources:
+Monetary values are handled as numbers and formatted as currency using the `formatCurrency` utility function. Dates are handled as strings and formatted using the `formatDate` utility function.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Potential Improvements
 
-## Join the community
+With more time, I would make the following improvements:
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Error Handling:** Improve the error handling to provide more specific error messages to the user.
+- **Testing:** Add unit and integration tests to ensure the application is working correctly.
+- **UI/UX:** Improve the UI/UX to make the application more user-friendly.
+- **Real API:** Replace the mock API with a real API to fetch data from a server.
+- **Authentication:** Add user authentication to protect the user's data.
+- **Offline Support:** Add offline support to allow the user to use the application without an internet connection.

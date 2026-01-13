@@ -2,13 +2,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import BalanceSummary from '../../components/balance-summary';
-import OpportunityList from '../../components/opportunity-list';
+import TransactionList from '../../components/transaction-list';
 
-const HomeScreen = () => {
+const WalletScreen = () => {
   return (
     <View style={styles.container}>
       <BalanceSummary />
-      <OpportunityList />
+      <TransactionList />
     </View>
   );
 };
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default WalletScreen;
